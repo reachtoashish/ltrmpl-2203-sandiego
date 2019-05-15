@@ -1,0 +1,19 @@
+<config>
+<native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+      <interface>
+      <GigabitEthernet>
+        <name>5.201</name>
+        <encapsulation>
+          <dot1Q>
+            <vlan-id>201</vlan-id>
+          </dot1Q>
+        </encapsulation>
+        <xconnect xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-l2vpn">
+          <address>192.168.0.1</address>
+          <vcid>201</vcid>
+          <encapsulation>mpls</encapsulation>
+        </xconnect>
+      </GigabitEthernet>		      
+     </interface>    
+</native>
+</config>

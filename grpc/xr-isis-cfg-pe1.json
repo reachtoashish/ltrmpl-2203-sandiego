@@ -1,0 +1,158 @@
+{
+ "Cisco-IOS-XR-clns-isis-cfg:isis": {
+  "instances": {
+   "instance": [
+    {
+     "instance-name": 1,
+     "running": [
+      null
+     ],
+     "nets": {
+      "net": [
+       {
+        "net-name": "49.1921.6800.0001.00"
+       }
+      ]
+     },
+     "afs": {
+      "af": [
+       {
+        "af-name": "ipv4",
+        "saf-name": "unicast",
+        "af-data": {
+         "metric-styles": {
+          "metric-style": [
+           {
+            "level": "not-set",
+            "style": "new-metric-style",
+            "transition-state": "disabled"
+           }
+          ]
+         }
+        }
+       }
+      ]
+     },
+     "interfaces": {
+      "interface": [
+       {
+        "interface-name": "Loopback0",
+        "running": [
+         null
+        ],
+        "state": "passive",
+        "circuit-type": "level2",
+        "interface-afs": {
+         "interface-af": [
+          {
+           "af-name": "ipv4",
+           "saf-name": "unicast",
+           "interface-af-data": {
+            "running": [
+             null
+            ]
+           }
+          }
+         ]
+        }
+       },
+       {
+        "interface-name": "GigabitEthernet0/0/0/1",
+        "running": [
+         null
+        ],
+        "circuit-type": "level2",
+        "point-to-point": [
+         null
+        ],
+        "interface-afs": {
+         "interface-af": [
+          {
+           "af-name": "ipv4",
+           "saf-name": "unicast",
+           "interface-af-data": {
+            "running": [
+             null
+            ],
+            "metrics": {
+             "metric": [
+              {
+               "level": "not-set",
+               "metric": 1
+              }
+             ]
+            }
+           }
+          }
+         ]
+        }
+       },
+       {
+        "interface-name": "GigabitEthernet0/0/0/2",
+        "running": [
+         null
+        ],
+        "circuit-type": "level2",
+        "point-to-point": [
+         null
+        ],
+        "interface-afs": {
+         "interface-af": [
+          {
+           "af-name": "ipv4",
+           "saf-name": "unicast",
+           "interface-af-data": {
+            "running": [
+             null
+            ],
+            "metrics": {
+             "metric": [
+              {
+               "level": "not-set",
+               "metric": 1
+              }
+             ]
+            }
+           }
+          }
+         ]
+        }
+       },
+       {
+        "interface-name": "GigabitEthernet0/0/0/3",
+        "running": [
+         null
+        ],
+        "circuit-type": "level2",
+        "point-to-point": [
+         null
+        ],
+        "interface-afs": {
+         "interface-af": [
+          {
+           "af-name": "ipv4",
+           "saf-name": "unicast",
+           "interface-af-data": {
+            "running": [
+             null
+            ],
+            "metrics": {
+             "metric": [
+              {
+               "level": "not-set",
+               "metric": 1
+              }
+             ]
+            }
+           }
+          }
+         ]
+        }
+       }
+      ]
+     }
+    }
+   ]
+  }
+ }
+}
