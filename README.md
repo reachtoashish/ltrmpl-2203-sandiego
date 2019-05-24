@@ -14,36 +14,5 @@ Following are some of the details.
 - Use Model Driven Telemetry to Monitor and influence the Network (IGP/BGP/MPLS).
 
 ```
-root@telemetry:~/ltrmpl-2203# tree -d
-.
-├── datamodels
-├── grpc
-├── md-sdk
-├── md-sdk+telemetry
-│   ├── kafka
-│   └── pipeline
-├── misc
-├── netconf
-│   └── ncc
-│       ├── images
-│       ├── nccutil
-│       ├── notebooks
-│       ├── redis-cb
-│       ├── redis-pub
-│       ├── sample
-│       ├── snippets
-│       │   ├── editconfigs
-│       │   └── filters
-│       ├── snippets-cl
-│       │   ├── editconfigs
-│       │   └── filters
-│       └── snippets-xe
-│           ├── editconfigs
-│           └── filters
-├── telemetry_script
-└── yang
-    └── modules
-        └── cisco-ios-xr
-            └── 651
 
 ```
