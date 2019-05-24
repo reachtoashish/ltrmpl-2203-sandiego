@@ -1,0 +1,37 @@
+<config-template xmlns="http://tail-f.com/ns/config/1.0" servicepoint="corebgp">
+         <devices xmlns="http://tail-f.com/ns/ncs">
+               <device>
+                 <name>{/RR/device}</name>
+                 <config>
+                   <router xmlns="http://tail-f.com/ned/cisco-ios-xr">
+                     <bgp>
+                       <bgp-no-instance>
+                         <id>1</id>
+                         <neighbor foreach="{/RR/peer-ip-addr}">
+                           <id>{peer-ip-addr}</id>
+                           <remote-as>1</remote-as>
+                           <address-family>
+                             <vpnv4>
+                               <unicast>
+                                 <route-policy>
+                                   <direction>in</direction>
+                                   <name>PASS</name>
+                                 </route-policy>
+                                 <route-policy>
+                                   <direction>out</direction>
+                                   <name>PASS</name>
+                                 </route-policy>
+                                 <route-reflector-client/>
+                               </unicast>
+                             </vpnv4>
+                           </address-family>
+                         </neighbor>
+                       </bgp-no-instance>
+                     </bgp>
+                   </router>
+                 </config>
+               </device>
+             </devices>
+</config-template>
+
+

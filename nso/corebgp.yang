@@ -1,0 +1,58 @@
+module corebgp {
+  namespace "http://com/example/corebgp";
+  prefix corebgp;
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+  import tailf-ncs {
+    prefix ncs;
+  }
+
+  import tailf-common {
+    prefix tailf;
+  }
+
+  augment /ncs:services {
+  list corebgp {
+    key name;
+
+    uses ncs:service-data;
+    ncs:servicepoint "corebgp";
+
+    leaf name {
+      type string;
+    }
+  list RR {
+         tailf:info "BGP RR";
+            min-elements 1;
+            max-elements 1;
+            key device;
+            leaf device {
+                tailf:info "RR Router";
+                mandatory true;
+                type leafref {
+                    path "/ncs:devices/ncs:device/ncs:name";
+                }
+            }
+            list peer-ip-addr {
+               tailf:info "IP Address of the Remote PE ";
+                min-elements 1;
+                max-elements 10;
+                key peer-ip-addr;
+                leaf peer-ip-addr {
+                    tailf:info "IP Address of Remote PE";
+                    mandatory true;
+                    type inet:ipv4-address;
+                }
+            }
+
+    // replace with your own stuff here
+    leaf dummy {
+      type inet:ipv4-address;
+    }
+  }
+  } // augment /ncs:services {
+}
+}
+
