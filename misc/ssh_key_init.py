@@ -38,6 +38,48 @@ exit
 exit
 """
 
+rr2_config = """
+conf t
+router bgp 1
+ !
+ neighbor 192.168.0.1
+  remote-as 1
+  update-source Loopback0
+  address-family vpnv4 unicast
+   route-policy PASS in
+   route-reflector-client
+   route-policy PASS out
+  !
+ !
+ neighbor 192.168.0.4
+  remote-as 1
+  update-source Loopback0
+  address-family vpnv4 unicast
+   route-policy PASS in
+   route-reflector-client
+   route-policy PASS out
+  !
+ !
+root
+commit
+exit
+exit
+"""
+
+pe4_config = """
+conf t
+route-policy PASS
+  pass
+end-policy
+!
+ !
+root
+commit
+exit
+exit
+"""
+
+
 def log_info(message_string):
     # print message_string
     ts = time.gmtime()
@@ -104,6 +146,12 @@ for HOST in XR_HOST:
     post_login = login_router(telnet_obj, user, password)
     post_login.write(xr_config + "\n")
     log_info('Key generated for Host: %s' % HOST)
+    if HOST == "198.18.1.14":
+        time.sleep(5)
+        telnet_obj = telnetlib.Telnet(HOST)
+        post_login = login_router(telnet_obj, user, password)
+        post_login.write(pe4_config + "\n")
+        log_info('PE4 specific route-policy pre config pushed: %s' % HOST)
     time.sleep(5)
 
 for HOST in RR_HOST:
@@ -111,5 +159,11 @@ for HOST in RR_HOST:
     post_login = login_router(telnet_obj, user, password)
     post_login.write(rr_config + "\n")
     log_info('RR BGP pre config pushed: %s' % HOST)
+    if HOST == "198.18.1.200":
+        time.sleep(5)
+        telnet_obj = telnetlib.Telnet(HOST)
+        post_login = login_router(telnet_obj, user, password)
+        post_login.write(rr2_config + "\n")
+        log_info('RR2 specific BGP pre config pushed: %s' % HOST)
     time.sleep(5)
 
