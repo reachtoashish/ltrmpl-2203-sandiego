@@ -6,6 +6,10 @@ import datetime
 
 ios_config = """
 conf t
+interface g0/2
+no shut
+exit
+!
 crypto key generate rsa
 yes
 2048
@@ -15,6 +19,14 @@ exit
 
 xe_config = """
 conf t
+int g2
+no mpls ip
+int g3
+no mpls ip
+int g4
+no mpls ip
+!
+exit
 crypto key generate rsa
 yes
 2048
@@ -74,6 +86,25 @@ end-policy
 !
  !
 root
+interface g0/0/0/3
+no shut
+root
+commit
+exit
+exit
+"""
+
+pe1_config = """
+conf t
+route-policy PASS
+  pass
+end-policy
+!
+ !
+root
+no tpa
+no telemetry model-driven
+root
 commit
 exit
 exit
@@ -93,11 +124,11 @@ def log_info(message_string):
 def login_router(tn, user, password):
     tn.read_until("Username: ")
     tn.write(user + "\n")
-    log_info("username entered")
+    #log_info("username entered")
     if password:
         tn.read_until("Password: ")
     tn.write(password + "\n")
-    log_info('password entered')
+    #log_info('password entered')
     tn.read_until("#")
     return tn
 
@@ -140,7 +171,7 @@ for HOST in XE_HOST:
     log_info('netconf configured for Host: %s' % HOST)
     post_login.write("exit" + "\n")
     post_login.write("exit" + "\n")
-    
+
 for HOST in XR_HOST:
     telnet_obj = telnetlib.Telnet(HOST)
     post_login = login_router(telnet_obj, user, password)
@@ -152,6 +183,12 @@ for HOST in XR_HOST:
         post_login = login_router(telnet_obj, user, password)
         post_login.write(pe4_config + "\n")
         log_info('PE4 specific route-policy pre config pushed: %s' % HOST)
+    if HOST == "198.18.1.11":
+        time.sleep(5)
+        telnet_obj = telnetlib.Telnet(HOST)
+        post_login = login_router(telnet_obj, user, password)
+        post_login.write(pe1_config + "\n")
+        log_info('PE1 specific route-policy, -tpa,-telemetry pre config pushed: %s' % HOST)
     time.sleep(5)
 
 for HOST in RR_HOST:
@@ -166,4 +203,3 @@ for HOST in RR_HOST:
         post_login.write(rr2_config + "\n")
         log_info('RR2 specific BGP pre config pushed: %s' % HOST)
     time.sleep(5)
-

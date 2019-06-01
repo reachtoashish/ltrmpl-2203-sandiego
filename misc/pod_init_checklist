@@ -6,17 +6,18 @@ git pull
 - On telemetry server Start YDK GRPC containers
 	docker start ydk
 	docker start grpc_py
+	show influxdb
 	start influxdb &
 		○ from grafana Delete outpackets drop chart 
 		○ Check yang explorer login
 ►  NSO
 	- Delete package corebgp and build folder
-rm -r ~/ncs-run/packages/corebgp
 rm -r ~/ciscolive/corebgp
-	- Copy the file backup
+	- Copy the file backup (pw = C1sco12345)
 		scp root@198.18.134.32:/root/ltrmpl-2203/nso/corebgp.yang /root/backup-packages/packages/corebgp/src/yang/corebgp.yang
-		C1sco12345
 		scp root@198.18.134.32:/root/ltrmpl-2203/nso/corebgp-template.xml /root/backup-packages/packages/corebgp/templates/corebgp-template.xml
+		cp  /root/backup-packages/packages/corebgp/templates/corebgp-template.xml /root/ncs-run/packages/corebgp/templates/corebgp-template.xml
+		
 	- NSO configuration deletion/factory reset
 		○ Back up[optional]
 			mkdir /root/ncs-cdb-backup/
@@ -32,9 +33,13 @@ rm -r ~/ciscolive/corebgp
 	- Start NSO
 		cd ~/ncs-run
 		ncs
-		○ Verify GUI
+	- package reload 
 - on Telemetry Initialize SSH script 
+  python /root/ltrmpl-2203/misc/ssh_key_init.py
 		[Added preconfig for BGP vpnv4 addressfamily on RR1 and 2
 		PE4 - configure BGP PASS policy
 		RR2 - push the BGP peer for pe1, pe4 config]
-	python /root/ltrmpl-2203/misc/ssh_key_init.py
+		PE1: Delete tpa and telemetry, add PASS policy
+		PE2 - remove mpls form g2, 3, 4
+		PE4 interface g0/0/0/3 no shut
+		CE2 g0/2 interface no shut]
