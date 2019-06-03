@@ -1,42 +1,51 @@
-	- Start VIRL script _4
-	► On telemetry server Sync with git (untrack log_file change and sync with github repo)
+► From VmMaestro Start VIRL script  Programability_4.virl
+	
+► On telemetry server Sync with git (untrack log_file change and sync with github repo)
 cd ltrmpl-2203
 git checkout -- misc/log_file.txt
 git pull
-- On telemetry server Start YDK GRPC containers
-	docker start ydk
-	docker start grpc_py
-	show influxdb
+
+####On telemetry server Start YDK GRPC containers
+docker start ydk
+docker start grpc_py
+show influxdb
+
+##Don't start influxdb if its already running. If not running start using follwing
 	start influxdb &
-		○ from grafana Delete outpackets drop chart 
-		○ Check yang explorer login
+
+##Check yang explorer login
+
 ►  NSO
-	- Delete package corebgp and build folder
+#######Delete package corebgp and build folder
 rm -r ~/ciscolive/corebgp
-	- Copy the file backup (pw = C1sco12345)
-		scp root@198.18.134.32:/root/ltrmpl-2203/nso/corebgp.yang /root/backup-packages/packages/corebgp/src/yang/corebgp.yang
-		scp root@198.18.134.32:/root/ltrmpl-2203/nso/corebgp-template.xml /root/backup-packages/packages/corebgp/templates/corebgp-template.xml
-		cp  /root/backup-packages/packages/corebgp/templates/corebgp-template.xml /root/ncs-run/packages/corebgp/templates/corebgp-template.xml
+
+###Copy the backup files from GIT>telemetry (pw = C1sco12345)
+scp root@198.18.134.32:/root/ltrmpl-2203/nso/corebgp.yang /root/backup-packages/packages/corebgp/src/yang/corebgp.yang
+scp root@198.18.134.32:/root/ltrmpl-2203/nso/corebgp-template.xml /root/backup-packages/packages/corebgp/templates/corebgp-template.xml
+cp  /root/backup-packages/packages/corebgp/templates/corebgp-template.xml /root/ncs-run/packages/corebgp/templates/corebgp-template.xml
 		
-	- NSO configuration deletion/factory reset
+- NSO configuration deletion/factory reset
 		○ Back up[optional]
 			mkdir /root/ncs-cdb-backup/
 			cp -r /root/ncs-run/ncs-cdb/ /root/ncs-cdb-backup/.      [for restore copy the contents back to ncs-cdb folder from backup]
-	source $HOME/nso-4.7/ncsrc
-	cd ~/ncs-run
-	ncs-setup --reset             <<< clears logs, cdb and states directory
-	ncs                                     <<< it had java errors related to ios ned packages
+source $HOME/nso-4.7/ncsrc
+cd ~/ncs-run
+###clear logs, cdb and states directory
+ncs-setup --reset
+ncs                                     
 	
-	Recompile ios packages [if get java errors]
-		cd ~/ncs-run/packages/cisco-ios/src/
-		make
-	- Start NSO
-		cd ~/ncs-run
-		ncs
-	- package reload 
-- on Telemetry Initialize SSH script 
-  python /root/ltrmpl-2203/misc/ssh_key_init.py
-		[Added preconfig for BGP vpnv4 addressfamily on RR1 and 2
+###Recompile ios packages [if get java errors]
+cd ~/ncs-run/packages/cisco-ios/src/
+make
+
+##Start NSO. Redeploy corebgp as we have changed XML files for that
+cd ~/ncs-run
+ncs
+packages package corebgp redeploy
+
+► on Telemetry Initialize SSH script 
+ python /root/ltrmpl-2203/misc/ssh_key_init.py
+		[Above script Adds preconfig for BGP vpnv4 addressfamily on RR1 and 2
 		PE4 - configure BGP PASS policy
 		RR2 - push the BGP peer for pe1, pe4 config]
 		PE1: Delete tpa and telemetry, add PASS policy
