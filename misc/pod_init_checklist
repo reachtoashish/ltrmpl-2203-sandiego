@@ -41,7 +41,11 @@ make
 ##Start NSO. Redeploy corebgp as we have changed XML files for that
 cd ~/ncs-run
 ncs
-packages package corebgp redeploy
+ncs_cli -u admin -C
+#packages package corebgp redeploy
+packages reload force
+exit
+
 
 ► on Telemetry Initialize SSH script 
  python /root/ltrmpl-2203/misc/ssh_key_init.py
