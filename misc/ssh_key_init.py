@@ -1,5 +1,4 @@
-import getpass
-import sys
+
 import telnetlib
 import time
 import datetime
@@ -10,6 +9,7 @@ interface g0/2
 no shut
 exit
 !
+conf t
 crypto key generate rsa
 yes
 2048
